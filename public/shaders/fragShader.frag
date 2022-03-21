@@ -1,12 +1,10 @@
-#pragma glslify: snoise = require(glsl-noise/simplex/3d) 
-#pragma glslify: cnoise = require(glsl-noise/classic/3d) 
-
 #define PI 3.1415926536
 #define TAU 2.*PI
 
 uniform float uTime;
+uniform int uFrame;
 uniform vec2 uResolution;
-uniform vec3 uVelocity;
+uniform sampler2D uTexture;
 varying vec2 vUv;
 
 vec2 correctAspectRatio(vec2 uv) {
@@ -19,13 +17,10 @@ vec2 correctAspectRatio(vec2 uv) {
 void main() {
     vec2 st = vUv;
 
-    st = correctAspectRatio(st);
+    // st = correctAspectRatio(st);
 
-    float t = .25*uTime;
-    float n_scale = 5.;
-    float d = abs(snoise(vec3(n_scale*st, t)));
-
-	vec3 color = vec3(d);
+    vec4 textureInput = texture2D(uTexture, st);
+    vec3 color = vec3(textureInput.xyz);
 
     gl_FragColor = vec4(color, 1);
 }

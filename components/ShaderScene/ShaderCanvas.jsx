@@ -1,21 +1,22 @@
 import { useFrame } from '@react-three/fiber'
 import React, { useRef } from 'react'
 
-const ShaderCanvas = (props) => {
-    const meshRef = useRef()
-
+const ShaderCanvas = React.forwardRef(({ material, ...props }, ref) => {
     useFrame((_, delta) => {
-        if (meshRef.current.material.uniforms.uTime) {
-            meshRef.current.material.uniforms.uTime.value += delta
+        if (ref) {
+            ref.current.material.uniforms.uTime.value += delta
+            ref.current.material.uniforms.uFrame.value += 1
         }
     })
 
     return (
-        <mesh ref={meshRef} {...props}>
+        <mesh ref={ref} {...props}>
             <planeGeometry args={[1, 1]} />
-            <shaderMaterial />
+            {material}
         </mesh>
     )
-}
+})
+
+ShaderCanvas.displayName = 'ShaderCanvas'
 
 export default ShaderCanvas
