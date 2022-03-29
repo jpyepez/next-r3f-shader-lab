@@ -1,15 +1,11 @@
 import { shaderMaterial } from '@react-three/drei/'
 import { extend } from '@react-three/fiber'
+import vertexShader from 'public/shaders/vertexShader.vert'
 
 const isArray = (arg) => Array.isArray(arg) && arg.length > 0
 const isObject = (arg) => typeof arg === 'object'
 
-const extendMaterial = ({
-    materialName,
-    uniforms,
-    vertexShader,
-    fragShader,
-}) => {
+const extendMaterial = ({ materialName, uniforms, fragShader }) => {
     const ShaderMaterial = shaderMaterial(uniforms, vertexShader, fragShader)
     extend({ [materialName]: ShaderMaterial })
 }

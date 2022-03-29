@@ -21,7 +21,7 @@ void main() {
     st = correctAspectRatio(st);
 
     float t = .25*uTime;
-    float n_scale = 5.;
+    float n_scale = 15.;
     float d = cnoise(vec3(n_scale*st, t));
 
 	vec3 color = vec3(.5*(1.+d));

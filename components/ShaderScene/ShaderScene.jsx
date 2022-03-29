@@ -21,7 +21,7 @@ const ShaderScene = React.forwardRef(
                 setUniformTexture(
                     renderOutput.ref,
                     renderOutput.uniformName,
-                    renderOutput.texture
+                    renderTarget.texture
                 )
         }, renderPriority)
 
