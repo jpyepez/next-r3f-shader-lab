@@ -31,11 +31,4 @@ const shaderMaterials = [
     },
 ]
 
-const getShaderMaterials = (canvasResolution) => {
-    shaderMaterials.forEach((material) => {
-        material.uniforms.uResolution = canvasResolution
-    })
-    return shaderMaterials
-}
-
-export default getShaderMaterials
+export default shaderMaterials

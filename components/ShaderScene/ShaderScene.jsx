@@ -5,7 +5,7 @@ import { CanvasSetupContext } from 'store/canvasSetup/CanvasSetupProvider'
 import setUniformTexture from 'utils/setUniformTexture'
 
 const ShaderScene = React.forwardRef(
-    ({ material, renderTarget, renderOutput, renderPriority = 0 }, ref) => {
+    ({ material, renderTarget, renderOutputs, renderPriority = 0 }, ref) => {
         const { scene } = useThree()
         const { scale } = useContext(CanvasSetupContext)
         const sceneRef = useRef()
@@ -17,12 +17,16 @@ const ShaderScene = React.forwardRef(
         useFrame(({ gl, camera }) => {
             gl.setRenderTarget(renderTarget)
             gl.render(sceneRef.current, camera)
-            renderOutput &&
-                setUniformTexture(
-                    renderOutput.ref,
-                    renderOutput.uniformName,
-                    renderTarget.texture
-                )
+
+            renderOutputs &&
+                renderOutputs.length > 0 &&
+                renderOutputs.forEach((output) => {
+                    setUniformTexture(
+                        output.ref,
+                        output.uniformName,
+                        renderTarget.texture
+                    )
+                })
         }, renderPriority)
 
         return (
